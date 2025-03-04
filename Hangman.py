@@ -143,6 +143,8 @@ class GameStart:
         match attempt:
             case str(attempt) if attempt == self.__hidden_word:
                 self.__word = attempt
+            case str(attempt) if attempt in self.__guessed_letters:
+                self.__word = self.__word
             case str(attempt) if attempt in self.__hidden_word and attempt not in self.__guessed_letters:
                 self.__guessed_letters += (attempt,)
                 self.__word = " ".join(letter 
@@ -161,7 +163,7 @@ class GameStart:
     
     @classmethod
     def check_mistakes(cls, mistake: int) -> bool:
-        """Проверяет не превыщено лимит допущеных ошибок"""
+        """Проверяет не превыщен ли лимит допущеных ошибок"""
         return mistake < cls.__MAX_MISTAKES
 
 
@@ -181,7 +183,7 @@ while flag:
         victory = False
         # Цикл завершится, если игрок победит или количество
         # допущенных ошибок станет равно максимально возможным
-        while game.check_mistakes(game.mistakes) or victory == False:
+        while game.check_mistakes(game.mistakes) and victory == False:
             # Условие победы - в слове не останется неизвестных букв
             if "_" not in game.word:                
                 print(f'''Победа! Ты угадал слово!\nЗагаданное слово: "{game.word}"''')
