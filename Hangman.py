@@ -160,9 +160,9 @@ class GameStart:
         print(cls.__HANGMAN[mistake])
     
     @classmethod
-    def check_attempts(cls, attempt: str) -> bool:
+    def check_mistakes(cls, mistake: int) -> bool:
         """Проверяет не превыщено лимит допущеных ошибок"""
-        return attempt != cls.__MAX_MISTAKES
+        return mistake < cls.__MAX_MISTAKES
 
 
 flag = True
@@ -181,7 +181,7 @@ while flag:
         victory = False
         # Цикл завершится, если игрок победит или количество
         # допущенных ошибок станет равно максимально возможным
-        while game.check_attempts(game.mistakes) or victory == False:
+        while game.check_mistakes(game.mistakes) or victory == False:
             # Условие победы - в слове не останется неизвестных букв
             if "_" not in game.word:                
                 print(f'''Победа! Ты угадал слово!\nЗагаданное слово: "{game.word}"''')
